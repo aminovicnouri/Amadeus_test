@@ -23,7 +23,7 @@ object AppModule {
     @Singleton
     fun provideWeatherApi(): WeatherApi {
         return Retrofit.Builder()
-            .baseUrl("http://127.0.0.1:5500/")
+            .baseUrl("http://10.0.2.2:5500/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create()

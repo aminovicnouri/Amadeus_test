@@ -7,11 +7,11 @@ data class WindDto(
     var speed: Double? = null,
 
     @field:Json(name = "deg")
-    var deg: Int? = null,
+    var deg: Double? = null,
 
     @field:Json(name = "var_beg")
-    var varBeg: Int? = null,
+    var varBeg: Double? = null,
 
     @field:Json(name = "var_end")
-    var varEnd: Int? = null
+    var varEnd: Double? = null
 )

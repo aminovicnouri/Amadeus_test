@@ -7,7 +7,7 @@ data class MainDto(
     var temp: Double? = null,
 
     @field:Json(name = "pressure")
-    var pressure: Int? = null,
+    var pressure: Double? = null,
 
     @field:Json(name = "humidity")
     var humidity: Int? = null,
