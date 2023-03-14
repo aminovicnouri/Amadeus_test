@@ -7,7 +7,7 @@ data class WeatherDataDto(
     var cityDto: CityDto? = CityDto(),
 
     @field:Json(name = "time")
-    var time: Int? = null,
+    var time: Long? = null,
 
     @field:Json(name = "main")
     var main: MainDto? = MainDto(),

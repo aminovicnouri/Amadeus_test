@@ -1,9 +1,8 @@
-package com.aminovic.amadeustest.data.local.entity
+package com.aminovic.amadeustest.domain.modal
 
-import androidx.room.Entity
+import java.time.LocalDateTime
 
-@Entity
-data class CityEntity(
+data class City(
     val cityId: Int?,
     val cityName: String?,
     val findName: String?,
@@ -11,7 +10,7 @@ data class CityEntity(
     val lon: Double?,
     val lat: Double?,
     val zoom: Int?,
-    val time: Long?,
+    val time: LocalDateTime?,
     val temp: Double?,
     val pressure: Int?,
     val humidity: Int?,
@@ -23,6 +22,6 @@ data class CityEntity(
     val windVarEnd: Int?,
     val clouds: Int?,
     val rain: Double?,
-    var weather: List<WeatherDescriptionLocal> = emptyList()
+    var weather: List<WeatherDescription> = emptyList()
 )
 
