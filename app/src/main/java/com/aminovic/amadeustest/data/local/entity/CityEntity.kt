@@ -2,8 +2,10 @@ package com.aminovic.amadeustest.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 
 @Entity
+@TypeConverters(WeatherDescriptionLocalTypeConverter::class)
 data class CityEntity(
     @PrimaryKey val cityId: Int?,
     val cityName: String?,
