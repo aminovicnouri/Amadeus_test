@@ -22,7 +22,7 @@ data class WeatherDataDto(
     var rain: RainDto? = RainDto(),
 
     @field:Json(name = "weather")
-    var weather: ArrayList<WeatherDescriptionDto> = arrayListOf()
+    var weather: List<WeatherDescriptionDto> = emptyList()
 )
 
 
