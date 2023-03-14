@@ -10,8 +10,8 @@ interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCity(cityEntity: CityEntity)
 
-    @Delete
-    suspend fun deleteCity(cityEntity: CityEntity)
+    @Query("DELETE FROM cityEntity")
+    suspend  fun deleteAllCities()
 
     @Query("SELECT * FROM cityEntity")
     fun getAllCities(): Flow<List<CityEntity>>

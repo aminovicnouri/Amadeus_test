@@ -1,9 +1,7 @@
 package com.aminovic.amadeustest.data.mappers
 
 import com.aminovic.amadeustest.data.local.entity.CityEntity
-import com.aminovic.amadeustest.data.local.entity.WeatherDescriptionLocal
 import com.aminovic.amadeustest.domain.modal.City
-import com.aminovic.amadeustest.domain.modal.WeatherDescription
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -29,14 +27,5 @@ fun CityEntity.toCity(): City {
         clouds = clouds,
         rain = rain,
         weather = weather.map { it.toWeatherDescription() },
-    )
-}
-
-fun WeatherDescriptionLocal.toWeatherDescription(): WeatherDescription {
-    return WeatherDescription(
-        id = id,
-        main = main,
-        description = description,
-        icon = icon,
     )
 }

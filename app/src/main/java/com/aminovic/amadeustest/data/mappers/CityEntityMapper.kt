@@ -2,6 +2,8 @@ package com.aminovic.amadeustest.data.mappers
 
 import com.aminovic.amadeustest.data.local.entity.CityEntity
 import com.aminovic.amadeustest.data.remote.dto.WeatherDataDto
+import com.aminovic.amadeustest.domain.modal.City
+import java.time.ZoneOffset
 
 fun WeatherDataDto.toCityEntity(): CityEntity {
     return CityEntity(
@@ -24,6 +26,31 @@ fun WeatherDataDto.toCityEntity(): CityEntity {
         windVarEnd = windDto?.varEnd,
         clouds = clouds?.all,
         rain = rain?.rain3h,
+        weather = weather.map { it.toWeatherDescriptionLocal() }
+    )
+}
+
+fun City.toCityEntity(): CityEntity {
+    return CityEntity(
+        cityId = cityId,
+        cityName = cityName,
+        findName = findName,
+        country = country,
+        lon = lon,
+        lat = lat,
+        zoom = zoom,
+        time = time?.toEpochSecond(ZoneOffset.UTC),
+        temp = temp,
+        pressure = pressure,
+        humidity = humidity,
+        tempMin = tempMin,
+        tempMax = tempMax,
+        windSpeed = windSpeed,
+        windDeg = windDeg,
+        windVarBeg = windVarBeg,
+        windVarEnd = windVarEnd,
+        clouds = clouds,
+        rain = rain,
         weather = weather.map { it.toWeatherDescriptionLocal() }
     )
 }

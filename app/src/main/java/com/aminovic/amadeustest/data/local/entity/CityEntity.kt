@@ -1,10 +1,11 @@
 package com.aminovic.amadeustest.data.local.entity
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity
 data class CityEntity(
-    val cityId: Int?,
+    @PrimaryKey val cityId: Int?,
     val cityName: String?,
     val findName: String?,
     val country: String?,
