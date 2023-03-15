@@ -3,9 +3,6 @@ package com.aminovic.amadeustest.presentation.screens.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,19 +11,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import coil.compose.AsyncImage
-import com.aminovic.amadeustest.presentation.modal.CityUi
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.fade
-import com.google.accompanist.placeholder.placeholder
+import com.aminovic.amadeustest.presentation.components.CityRow
 
 
 @Composable
@@ -96,73 +86,6 @@ fun HomeScreen(
             }
         }
     }
-}
-
-@Composable
-private fun CityRow(
-    city: CityUi?
-) {
-    Spacer(modifier = Modifier.height(8.dp))
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        elevation = 8.dp
-    ) {
-        Row {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                AsyncImage(
-                    model = city?.image,
-                    contentDescription = "country code",
-
-                    modifier = Modifier
-                        .size(25.dp)
-                        .clip(shape = CircleShape),
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = city?.cityName ?: "",
-                        modifier = Modifier
-                            .placeholder(
-                                visible = city == null,
-                                highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
-                                color = Color.Green
-                            )
-                            .fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = city?.cityName ?: "",
-                        style = MaterialTheme.typography.caption,
-                        modifier = Modifier
-                            .placeholder(
-                                visible = city == null,
-                                highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
-                                color = Color.Green
-                            )
-                            .fillMaxWidth()
-                    )
-                }
-
-                AsyncImage(
-                    model = city?.country,
-                    contentDescription = "country code",
-
-                    modifier = Modifier
-                        .size(25.dp)
-                        .clip(shape = RoundedCornerShape(size = 16.dp)),
-                    contentScale = ContentScale.FillHeight
-                )
-            }
-        }
-    }
-    Spacer(modifier = Modifier.height(8.dp))
 }
 
 private fun LazyListScope.showLoading() {

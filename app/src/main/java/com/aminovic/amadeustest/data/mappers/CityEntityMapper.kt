@@ -15,7 +15,7 @@ fun WeatherDataDto.toCityEntity(): CityEntity {
         lat = cityDto?.coordDto?.lat,
         zoom = cityDto?.zoom,
         time = time,
-        temp = main?.temp,
+        temp = ((main?.temp?.minus(32))?.times(5))?.div(9),
         pressure = main?.pressure,
         humidity = main?.humidity,
         tempMin = main?.tempMin,
