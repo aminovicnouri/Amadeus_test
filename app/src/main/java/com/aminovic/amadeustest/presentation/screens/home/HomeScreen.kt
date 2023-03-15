@@ -107,46 +107,57 @@ private fun CityRow(
         shape = RoundedCornerShape(16.dp),
         elevation = 8.dp
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(
-                model = city?.country,
-                contentDescription = "country code",
-
+        Row {
+            Row(
                 modifier = Modifier
-                    .size(25.dp)
-                    .clip(shape = CircleShape),
-                contentScale = ContentScale.FillHeight
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                modifier = Modifier.weight(1f)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = city?.cityName ?: "",
+                AsyncImage(
+                    model = city?.image,
+                    contentDescription = "country code",
+
                     modifier = Modifier
-                        .placeholder(
-                            visible = city == null,
-                            highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
-                            color = Color.Green
-                        )
-                        .fillMaxWidth()
+                        .size(25.dp)
+                        .clip(shape = CircleShape),
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = city?.cityName ?: "",
-                    style = MaterialTheme.typography.caption,
+                Spacer(modifier = Modifier.width(16.dp))
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = city?.cityName ?: "",
+                        modifier = Modifier
+                            .placeholder(
+                                visible = city == null,
+                                highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
+                                color = Color.Green
+                            )
+                            .fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = city?.cityName ?: "",
+                        style = MaterialTheme.typography.caption,
+                        modifier = Modifier
+                            .placeholder(
+                                visible = city == null,
+                                highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
+                                color = Color.Green
+                            )
+                            .fillMaxWidth()
+                    )
+                }
+
+                AsyncImage(
+                    model = city?.country,
+                    contentDescription = "country code",
+
                     modifier = Modifier
-                        .placeholder(
-                            visible = city == null,
-                            highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
-                            color = Color.Green
-                        )
-                        .fillMaxWidth()
+                        .size(25.dp)
+                        .clip(shape = RoundedCornerShape(size = 16.dp)),
+                    contentScale = ContentScale.FillHeight
                 )
             }
         }

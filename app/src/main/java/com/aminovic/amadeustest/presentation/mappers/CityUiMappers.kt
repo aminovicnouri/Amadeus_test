@@ -27,8 +27,27 @@ fun City.toCityUi(): CityUi {
         clouds = clouds,
         rain = rain,
         weather = weather,
-        image = -1
+        image = weather.first().description?.let { getWeatherImage(it) }
     )
+}
+
+fun getWeatherImage(desc: String): Int {
+    return when (desc) {
+        "scattered clouds", "broken clouds", "few clouds" -> R.drawable.ic_cloudy
+        "overcast clouds", "fog" -> R.drawable.ic_very_cloudy
+        "Sky is Clear" -> R.drawable.ic_sunny
+        "light intensity shower rain", "light shower sleet" -> R.drawable.ic_rainshower
+        "proximity shower rain", "light rain", "moderate rain", "heavy intensity rain", "proximity moderate rain" -> R.drawable.ic_rainy
+        "freezing rain" -> R.drawable.ic_rainythunder
+        "dust", "mist", "haze", "sand", "smoke" -> R.drawable.ic_wind
+        "light snow", "light shower snow" -> R.drawable.ic_snowyrainy
+        "snow", "heavy snow" -> R.drawable.ic_snowy
+        "light thunderstorm", "thunderstorm", "proximity thunderstorm" -> R.drawable.ic_thunder
+        "thunderstorm with rain", "thunderstorm with light rain" -> R.drawable.ic_rainythunder
+        "light intensity drizzle", "drizzle" -> R.drawable.ic_rainshower
+        "rain and drizzle" -> R.drawable.ic_snowyrainy
+        else -> R.drawable.ic_sunny
+    }
 }
 
 fun getRes(country: String): Int {
