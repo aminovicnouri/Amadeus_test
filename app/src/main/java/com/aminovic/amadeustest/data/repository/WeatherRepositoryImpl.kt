@@ -28,10 +28,8 @@ class WeatherRepositoryImpl(
             dao.getCities(query, pageSize, offset).map { it.toCity() }
     }
 
-    override fun searchCity(query: String): Flow<List<City>> {
-        return dao.getCityByName(query).map { listOfEntities ->
-            listOfEntities.map { it.toCity() }
-        }
+    override suspend fun getCityById(id: Int): City? {
+        return dao.getCityById(id)?.toCity()
     }
 
     override suspend fun getCitiesCount(): Int {

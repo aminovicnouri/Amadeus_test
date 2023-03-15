@@ -29,8 +29,8 @@ interface WeatherDao {
         """
             SELECT *
             FROM cityEntity
-            WHERE findName = :query
+            WHERE cityId = :id
         """
     )
-    fun getCityByName(query: String): Flow<List<CityEntity>>
+    suspend fun getCityById(id: Int): CityEntity?
 }

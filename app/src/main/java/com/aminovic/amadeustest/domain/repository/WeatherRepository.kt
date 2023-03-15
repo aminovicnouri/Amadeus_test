@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface WeatherRepository {
     fun getAllCities(): Flow<List<City>>
     suspend fun getCities(query: String?, pageSize: Int, pageNumber: Int): List<City>
-    fun searchCity(query: String): Flow<List<City>>
+    suspend fun getCityById(id: Int): City?
     suspend fun getCitiesCount(): Int
     suspend fun insertCity(city: City)
     suspend fun deleteAllCities()

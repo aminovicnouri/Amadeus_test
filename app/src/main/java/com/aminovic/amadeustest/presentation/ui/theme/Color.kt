@@ -5,10 +5,8 @@ import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 val AccentViolet = Color(Colors.AccentViolet)
-val LightBlue = Color(Colors.LightBlue)
 val LightBlueGrey = Color(Colors.LightBlueGrey)
 val TextBlack = Color(Colors.TextBlack)
-val DarkGrey = Color(Colors.DarkGrey)
 
 val lightColors = lightColors(
     primary = AccentViolet,
@@ -21,9 +19,9 @@ val lightColors = lightColors(
 
 val darkColors = darkColors(
     primary = AccentViolet,
-    background = DarkGrey,
+    background = Colors.DeepBlue,
     onPrimary = Color.White,
     onBackground = Color.White,
-    surface = Color.Gray,
+    surface = Colors.DarkBlue,
     onSurface = Color.White
 )

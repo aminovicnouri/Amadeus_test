@@ -1,5 +1,6 @@
-package com.aminovic.amadeustest.presentation.components
+package com.aminovic.amadeustest.presentation.screens.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,13 +28,15 @@ import kotlin.math.roundToInt
 
 @Composable
 fun CityRow(
-    city: CityUi?
+    city: CityUi,
+    onClick: (Int) -> Unit
 ) {
     Spacer(modifier = Modifier.height(8.dp))
     Card(
         shape = RoundedCornerShape(16.dp),
         backgroundColor = MaterialTheme.colors.surface,
-        elevation = 8.dp
+        elevation = 8.dp,
+        modifier = Modifier.clickable { onClick(city.cityId!!) }
     ) {
         Row(
             modifier = Modifier
@@ -47,7 +50,7 @@ fun CityRow(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AsyncImage(
-                    model = city?.image,
+                    model = city.image,
                     contentDescription = "country code",
 
                     modifier = Modifier
@@ -55,7 +58,7 @@ fun CityRow(
                         .clip(shape = CircleShape),
                 )
                 Text(
-                    text = "${city?.temp?.roundToInt()}ªC",
+                    text = "${city.temp?.roundToInt()}ªC",
                     style = TextStyle(
                         fontSize = 12.sp
                     ),
@@ -67,10 +70,10 @@ fun CityRow(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = city?.cityName ?: "",
+                    text = city.cityName ?: "",
                     modifier = Modifier
                         .placeholder(
-                            visible = city == null,
+                            visible = false,
                             highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
                             color = Color.Green
                         )
@@ -83,7 +86,7 @@ fun CityRow(
                         .padding(end = 5.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    city?.pressure?.roundToInt()?.let {
+                    city.pressure?.roundToInt()?.let {
                         WeatherDataDisplay(
                             value = it,
                             unit = "hpa",
@@ -92,7 +95,7 @@ fun CityRow(
                             )
                         )
                     }
-                    city?.humidity?.let {
+                    city.humidity?.let {
                         WeatherDataDisplay(
                             value = it,
                             unit = "%",
@@ -101,7 +104,7 @@ fun CityRow(
                             )
                         )
                     }
-                    city?.windSpeed?.roundToInt()?.let {
+                    city.windSpeed?.roundToInt()?.let {
                         WeatherDataDisplay(
                             value = it,
                             unit = "km/h",
@@ -114,7 +117,7 @@ fun CityRow(
             }
 
             AsyncImage(
-                model = city?.country,
+                model = city.country,
                 contentDescription = "country code",
 
                 modifier = Modifier

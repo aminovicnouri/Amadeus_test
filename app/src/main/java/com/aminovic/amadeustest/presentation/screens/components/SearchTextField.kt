@@ -1,4 +1,4 @@
-package com.aminovic.amadeustest.presentation.components
+package com.aminovic.amadeustest.presentation.screens.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

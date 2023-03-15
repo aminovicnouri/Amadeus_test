@@ -21,14 +21,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.aminovic.amadeustest.presentation.components.CityRow
-import com.aminovic.amadeustest.presentation.components.SearchTextField
+import com.aminovic.amadeustest.presentation.screens.components.CityRow
+import com.aminovic.amadeustest.presentation.screens.components.SearchTextField
 
 
 @ExperimentalComposeUiApi
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToDetails: (Int) -> Unit
 ) {
     val cities = viewModel.cities.collectAsLazyPagingItems()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -104,8 +105,8 @@ fun HomeScreen(
             items(
                 items = cities,
                 key = { it.cityId!! }
-            ) {
-                CityRow(city = it)
+            ) { city ->
+                city?.let { CityRow(city = it, onClick = navigateToDetails) }
             }
             when (val pagingState = cities.loadState.append) {
                 is LoadState.NotLoading -> Unit

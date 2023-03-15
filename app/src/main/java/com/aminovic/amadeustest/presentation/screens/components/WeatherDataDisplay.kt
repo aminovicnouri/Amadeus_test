@@ -1,4 +1,4 @@
-package com.aminovic.amadeustest.presentation.components
+package com.aminovic.amadeustest.presentation.screens.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
