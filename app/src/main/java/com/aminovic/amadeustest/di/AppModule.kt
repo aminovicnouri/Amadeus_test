@@ -10,9 +10,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import java.io.File
 import javax.inject.Singleton
 
 @Module
@@ -21,9 +24,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideWeatherApi(): WeatherApi {
+    fun provideOkHttpClient(app: Application): OkHttpClient {
+        val cacheSize = (5 * 1024 * 1024).toLong() // 5 MB
+        val cacheDirectory = File(app.cacheDir, "http-cache")
+        val cache = Cache(cacheDirectory, cacheSize)
+
+        return  OkHttpClient.Builder()
+            .cache(cache)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWeatherApi(okHttpClient: OkHttpClient): WeatherApi {
         return Retrofit.Builder()
             .baseUrl("http://10.0.2.2:5500/")
+            .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create()

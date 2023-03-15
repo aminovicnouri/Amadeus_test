@@ -16,6 +16,12 @@ interface WeatherDao {
     @Query("SELECT * FROM cityEntity")
     fun getAllCities(): Flow<List<CityEntity>>
 
+    @Query("SELECT * FROM cityEntity ORDER BY cityId LIMIT :limit OFFSET :offset")
+    suspend fun getCities(limit: Int, offset: Int): List<CityEntity>
+
+    @Query("SELECT COUNT(*) FROM cityEntity")
+    suspend  fun getCitiesCount(): Int
+
     @Query(
         """
             SELECT *

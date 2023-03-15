@@ -20,10 +20,19 @@ class WeatherRepositoryImpl(
         }
     }
 
+    override suspend fun getCities(pageSize: Int, pageNumber: Int): List<City> {
+        val offset = (pageNumber - 1) * pageSize
+        return dao.getCities(pageSize, offset).map { it.toCity() }
+    }
+
     override fun searchCity(query: String): Flow<List<City>> {
         return dao.getCityByName(query).map { listOfEntities ->
             listOfEntities.map { it.toCity() }
         }
+    }
+
+    override suspend fun getCitiesCount(): Int {
+        return dao.getCitiesCount()
     }
 
     override suspend fun insertCity(city: City) {
