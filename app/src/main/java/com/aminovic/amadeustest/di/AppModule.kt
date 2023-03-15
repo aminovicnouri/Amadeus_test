@@ -25,11 +25,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(app: Application): OkHttpClient {
-        val cacheSize = (5 * 1024 * 1024).toLong() // 5 MB
+        val cacheSize = (12 * 1024 * 1024).toLong() // 5 MB
         val cacheDirectory = File(app.cacheDir, "http-cache")
         val cache = Cache(cacheDirectory, cacheSize)
 
-        return  OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .cache(cache)
             .build()
     }

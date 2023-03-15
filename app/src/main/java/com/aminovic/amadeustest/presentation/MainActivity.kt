@@ -39,7 +39,12 @@ class MainActivity : ComponentActivity() {
                                 navigateToDetails = { id ->
                                     navController.navigate(
                                         Screens.Details.route + "/$id"
-                                    )
+                                    ) {
+                                        launchSingleTop = true
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                    }
                                 }
                             )
                         }
@@ -53,7 +58,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             val id = it.arguments?.getInt("cityId")!!
                             DetailsScreen(
-                               cityId = id,
+                                cityId = id,
                                 popup = { navController.popBackStack() }
                             )
                         }

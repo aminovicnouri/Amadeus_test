@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,7 +22,7 @@ fun WeatherDataDisplay(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle(),
-    iconTint: Color = Color.White
+    iconTint: Color = MaterialTheme.colors.onSurface,
 ) {
 
     Row(
@@ -38,7 +39,7 @@ fun WeatherDataDisplay(
         Text(
             text = "$value $unit",
             style = textStyle,
-            color = Color.White
+            color = iconTint,
         )
     }
 

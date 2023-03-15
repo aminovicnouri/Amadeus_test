@@ -307,9 +307,6 @@ fun getRes(country: String): Int {
         "IM" -> {
             R.drawable.im
         }
-        "IL" -> {
-            R.drawable.dz
-        }
         "IT" -> {
             R.drawable.it
         }
@@ -668,7 +665,7 @@ fun getRes(country: String): Int {
             R.drawable.zw
         }
         else -> {
-            R.drawable.dz
+            R.drawable.globe
         }
     }
 }

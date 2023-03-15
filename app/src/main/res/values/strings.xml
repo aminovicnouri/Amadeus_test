@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Amadeus Test</string>
     <string name="search">Search</string>
+    <string name="back_button">back button</string>
+    <string name="refresh_button">refresh button</string>
 
 </resources>

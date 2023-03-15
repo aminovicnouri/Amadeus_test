@@ -57,7 +57,7 @@ fun WeatherCard(
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "${city.temp}ªC",
+                text = "${city.temp?.roundToInt()}ºC",
                 fontSize = 50.sp,
                 color = Color.White
             )
@@ -88,7 +88,8 @@ fun WeatherCard(
                         unit = "hpa",
                         icon = ImageVector.vectorResource(
                             id = R.drawable.ic_pressure
-                        )
+                        ),
+                        iconTint = Color.White
                     )
                 }
                 city.humidity?.let {
@@ -97,7 +98,8 @@ fun WeatherCard(
                         unit = "%",
                         icon = ImageVector.vectorResource(
                             id = R.drawable.ic_drop
-                        )
+                        ),
+                        iconTint = Color.White
                     )
                 }
                 city.windSpeed?.roundToInt()?.let {
@@ -106,7 +108,8 @@ fun WeatherCard(
                         unit = "km/h",
                         icon = ImageVector.vectorResource(
                             id = R.drawable.ic_wind
-                        )
+                        ),
+                        iconTint = Color.White
                     )
                 }
             }

@@ -1,20 +1,20 @@
 package com.aminovic.amadeustest.presentation.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 val AccentViolet = Color(Colors.AccentViolet)
-val LightBlueGrey = Color(Colors.LightBlueGrey)
-val TextBlack = Color(Colors.TextBlack)
 
+@SuppressLint("ConflictingOnColor")
 val lightColors = lightColors(
     primary = AccentViolet,
-    background = LightBlueGrey,
+    background = Color.White,
     onPrimary = Color.White,
-    onBackground = TextBlack,
+    onBackground = Colors.DeepBlue,
     surface = Color.White,
-    onSurface = TextBlack
+    onSurface = Colors.DarkBlue
 )
 
 val darkColors = darkColors(

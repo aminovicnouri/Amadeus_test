@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,30 +22,22 @@ class HomeViewModel @Inject constructor(
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState>
         get() = _state
+    var cities = initCitiesFlow()
 
-    var cities: Flow<PagingData<CityUi>> = Pager(
-        pagingSourceFactory = { CityPagingSource(repository) },
-        config = PagingConfig(pageSize = 50)
-    ).flow.map { list ->
-        list.map { it.toCityUi() }
-    }.cachedIn(viewModelScope)
+    init {
+        loadDataFormApi()
+    }
 
     fun onEvent(event: HomeEvent) {
         when (event) {
             HomeEvent.RefreshData -> {
-                // loadDataFormApi()
+                loadDataFormApi()
             }
             is HomeEvent.OnQueryChange -> {
                 _state.update { it.copy(query = event.query) }
                 val query = event.query.ifBlank { null }
-                cities = Pager(
-                    pagingSourceFactory = { CityPagingSource(repository, query = query) },
-                    config = PagingConfig(pageSize = 50)
-                ).flow.map { list ->
-                    list.map { it.toCityUi() }
-                }.cachedIn(viewModelScope)
+                cities = initCitiesFlow(query)
             }
-            HomeEvent.OnSearch -> executeSearch()
             is HomeEvent.OnSearchFocusChange -> {
                 _state.update {
                     it.copy(
@@ -55,21 +48,32 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun executeSearch() {
+    private fun initCitiesFlow(query: String? = null): Flow<PagingData<CityUi>> {
+        return Pager(
+            pagingSourceFactory = { CityPagingSource(repository, query = query) },
+            config = PagingConfig(pageSize = 100)
+        ).flow.map { list ->
+            list.map { it.toCityUi() }
+        }.cachedIn(viewModelScope)
     }
 
     private fun loadDataFormApi() {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repository.getWeatherData()) {
-                is Resource.Error -> Unit
-                is Resource.Success -> {
-                    result.data?.let {
-                        for (i in result.data) {
-                            repository.insertCity(i)
+        viewModelScope.launch() {
+            _state.update { it.copy(isLoading = true) }
+            withContext(Dispatchers.IO) {
+                when (val result = repository.getWeatherData()) {
+                    is Resource.Error -> Unit
+                    is Resource.Success -> {
+                        result.data?.let {
+                            repository.deleteAllCities()
+                            for (i in result.data) {
+                                repository.insertCity(i)
+                            }
+                            cities = initCitiesFlow()
                         }
                     }
-
                 }
+                _state.update { it.copy(isLoading = false) }
             }
         }
     }

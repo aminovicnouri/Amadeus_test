@@ -1,5 +1,6 @@
 package com.aminovic.amadeustest.presentation.screens.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.aminovic.amadeustest.R
 import com.aminovic.amadeustest.presentation.modal.CityUi
+import com.aminovic.amadeustest.presentation.ui.theme.Colors
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.fade
 import com.google.accompanist.placeholder.placeholder
@@ -55,14 +57,17 @@ fun CityRow(
 
                     modifier = Modifier
                         .size(25.dp)
-                        .clip(shape = CircleShape),
+                        .clip(shape = CircleShape)
+                        .background(color = Colors.DarkBlue)
+                        .padding(all = 5.dp),
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "${city.temp?.roundToInt()}ªC",
                     style = TextStyle(
                         fontSize = 12.sp
                     ),
-                    color = Color.White
+                    color = MaterialTheme.colors.onSurface
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -71,11 +76,13 @@ fun CityRow(
             ) {
                 Text(
                     text = city.cityName ?: "",
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onSurface,
                     modifier = Modifier
                         .placeholder(
                             visible = false,
                             highlight = PlaceholderHighlight.fade(highlightColor = Color.LightGray),
-                            color = Color.Green
+                            color = MaterialTheme.colors.onSurface
                         )
                         .fillMaxWidth()
                 )
