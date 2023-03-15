@@ -19,6 +19,9 @@ interface WeatherDao {
     @Query("SELECT * FROM cityEntity ORDER BY cityId LIMIT :limit OFFSET :offset")
     suspend fun getCities(limit: Int, offset: Int): List<CityEntity>
 
+    @Query("SELECT * FROM cityEntity WHERE findName LIKE '%' || :query || '%'  ORDER BY cityId LIMIT :limit OFFSET :offset")
+    suspend fun getCities(query: String,limit: Int, offset: Int): List<CityEntity>
+
     @Query("SELECT COUNT(*) FROM cityEntity")
     suspend  fun getCitiesCount(): Int
 

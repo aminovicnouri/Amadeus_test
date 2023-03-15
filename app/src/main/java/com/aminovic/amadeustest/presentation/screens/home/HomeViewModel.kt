@@ -10,8 +10,7 @@ import com.aminovic.amadeustest.presentation.mappers.toCityUi
 import com.aminovic.amadeustest.presentation.modal.CityUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +18,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val repository: WeatherRepository
 ) : ViewModel() {
+    private val _state = MutableStateFlow(HomeState())
+    val state: StateFlow<HomeState>
+        get() = _state
 
     var cities: Flow<PagingData<CityUi>> = Pager(
         pagingSourceFactory = { CityPagingSource(repository) },
@@ -32,7 +34,28 @@ class HomeViewModel @Inject constructor(
             HomeEvent.RefreshData -> {
                 // loadDataFormApi()
             }
+            is HomeEvent.OnQueryChange -> {
+                _state.update { it.copy(query = event.query) }
+                val query = event.query.ifBlank { null }
+                cities = Pager(
+                    pagingSourceFactory = { CityPagingSource(repository, query = query) },
+                    config = PagingConfig(pageSize = 50)
+                ).flow.map { list ->
+                    list.map { it.toCityUi() }
+                }.cachedIn(viewModelScope)
+            }
+            HomeEvent.OnSearch -> executeSearch()
+            is HomeEvent.OnSearchFocusChange -> {
+                _state.update {
+                    it.copy(
+                        isHintVisible = !event.isFocused && it.query.isBlank()
+                    )
+                }
+            }
         }
+    }
+
+    private fun executeSearch() {
     }
 
     private fun loadDataFormApi() {

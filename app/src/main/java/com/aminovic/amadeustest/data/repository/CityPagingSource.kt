@@ -9,17 +9,33 @@ import kotlinx.coroutines.withContext
 
 
 class CityPagingSource(
-    private val repository: WeatherRepository
+    private val repository: WeatherRepository,
+    private val query: String? = null
 ) : PagingSource<Int, City>() {
+    private val pageCache = LinkedHashMap<Int, List<City>>()
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, City> =
         try {
             withContext(Dispatchers.IO) {
                 val size = params.loadSize
-                val pageNumber = params.key ?: 0
-                val cities = repository.getCities(size, pageNumber)
+                val pageNumber = params.key ?: 1
+                val cachedPage = pageCache[pageNumber]
+                if (cachedPage != null) {
+                    LoadResult.Page(cachedPage, prevKey = pageNumber - 1, nextKey = pageNumber + 1)
+                }
+
+                val cities = repository.getCities(query, size, pageNumber)
                 val prevKey = if (pageNumber == 1) null else pageNumber - 1
                 val nextKey = if (cities.isEmpty()) null else pageNumber + 1
-                LoadResult.Page(cities, prevKey, nextKey)
+                val result = LoadResult.Page(cities, prevKey, nextKey)
+
+                pageCache[pageNumber] = cities
+                if (pageCache.size > 4) {
+                    val oldestPageNumber = pageCache.keys.first()
+                    pageCache.remove(oldestPageNumber)
+                }
+
+                result
             }
 
         } catch (e: Exception) {
@@ -28,6 +44,9 @@ class CityPagingSource(
 
 
     override fun getRefreshKey(state: PagingState<Int, City>): Int? {
-        return state.anchorPosition
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
     }
 }

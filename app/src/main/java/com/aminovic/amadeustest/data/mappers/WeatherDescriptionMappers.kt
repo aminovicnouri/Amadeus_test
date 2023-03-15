@@ -22,7 +22,6 @@ fun WeatherDescription.toWeatherDescriptionLocal(): WeatherDescriptionLocal {
     )
 }
 
-
 fun WeatherDescriptionLocal.toWeatherDescription(): WeatherDescription {
     return WeatherDescription(
         id = id,

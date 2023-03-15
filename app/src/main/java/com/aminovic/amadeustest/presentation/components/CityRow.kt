@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +32,7 @@ fun CityRow(
     Spacer(modifier = Modifier.height(8.dp))
     Card(
         shape = RoundedCornerShape(16.dp),
+        backgroundColor = MaterialTheme.colors.surface,
         elevation = 8.dp
     ) {
         Row(
