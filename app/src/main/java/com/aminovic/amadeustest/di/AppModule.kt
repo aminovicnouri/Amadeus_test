@@ -38,7 +38,7 @@ object AppModule {
     @Singleton
     fun provideWeatherApi(okHttpClient: OkHttpClient): WeatherApi {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:5500/")
+            .baseUrl("https://gist.githubusercontent.com/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
