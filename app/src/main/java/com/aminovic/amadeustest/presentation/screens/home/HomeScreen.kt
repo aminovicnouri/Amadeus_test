@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -45,6 +46,7 @@ fun HomeScreen(
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(text = "size: ${cities.itemCount}")
         Row(
             Modifier.fillMaxWidth(),
         ) {
@@ -85,6 +87,16 @@ fun HomeScreen(
                             .then(Modifier.size(24.dp)),
                     )
                 }
+            }
+        }
+        AnimatedVisibility(visible = (state.error != null && cities.itemCount == 0)) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = stringResource(R.string.network_error),
+                    style = MaterialTheme.typography.body1,
+                    color = Color.White,
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
         LazyColumn(

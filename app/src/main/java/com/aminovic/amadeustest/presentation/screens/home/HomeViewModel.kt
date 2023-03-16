@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
     private fun initCitiesFlow(query: String? = null): Flow<PagingData<CityUi>> {
         return Pager(
             pagingSourceFactory = { CityPagingSource(repository, query = query) },
-            config = PagingConfig(pageSize = 100)
+            config = PagingConfig(pageSize = 100, prefetchDistance = 100)
         ).flow.map { list ->
             list.map { it.toCityUi() }
         }.cachedIn(viewModelScope)
@@ -62,7 +62,9 @@ class HomeViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true) }
             withContext(Dispatchers.IO) {
                 when (val result = repository.getWeatherData()) {
-                    is Resource.Error -> Unit
+                    is Resource.Error -> {
+                        _state.update { it.copy(isLoading = false, error = result.message) }
+                    }
                     is Resource.Success -> {
                         result.data?.let {
                             repository.deleteAllCities()
@@ -71,9 +73,9 @@ class HomeViewModel @Inject constructor(
                             }
                             cities = initCitiesFlow()
                         }
+                        _state.update { it.copy(isLoading = false, error = null) }
                     }
                 }
-                _state.update { it.copy(isLoading = false) }
             }
         }
     }

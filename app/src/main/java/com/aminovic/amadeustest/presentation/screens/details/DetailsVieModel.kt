@@ -25,7 +25,9 @@ class DetailsVieModel @Inject constructor(
                 viewModelScope.launch {
                     _state.update { it.copy(isLoading = true) }
                     val city = repository.getCityById(event.id)?.toCityUi()
-                    city?.let { _state.update { it.copy(isLoading = false, city = city) } }
+                    city?.let {
+                        _state.update { it.copy(isLoading = false, city = city, error = null) }
+                    }
                         ?: kotlin.run {
                             _state.update {
                                 it.copy(
