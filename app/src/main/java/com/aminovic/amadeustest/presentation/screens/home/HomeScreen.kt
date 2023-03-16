@@ -1,6 +1,7 @@
 package com.aminovic.amadeustest.presentation.screens.home
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -27,6 +28,7 @@ import com.aminovic.amadeustest.presentation.screens.components.CityRow
 import com.aminovic.amadeustest.presentation.screens.components.SearchTextField
 
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
 fun HomeScreen(
@@ -46,7 +48,6 @@ fun HomeScreen(
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "size: ${cities.itemCount}")
         Row(
             Modifier.fillMaxWidth(),
         ) {
@@ -89,10 +90,13 @@ fun HomeScreen(
                 }
             }
         }
-        AnimatedVisibility(visible = (state.error != null && cities.itemCount == 0)) {
+        AnimatedVisibility(visible = (cities.itemCount == 0)) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Text(
-                    text = stringResource(R.string.network_error),
+                    text = if (state.error != null)
+                        stringResource(R.string.network_error)
+                    else
+                        stringResource(R.string.not_found),
                     style = MaterialTheme.typography.body1,
                     color = Color.White,
                     modifier = Modifier.align(Alignment.Center)

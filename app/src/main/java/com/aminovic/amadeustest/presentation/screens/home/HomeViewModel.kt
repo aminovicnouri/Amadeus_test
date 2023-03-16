@@ -68,9 +68,7 @@ class HomeViewModel @Inject constructor(
                     is Resource.Success -> {
                         result.data?.let {
                             repository.deleteAllCities()
-                            for (i in result.data) {
-                                repository.insertCity(i)
-                            }
+                            repository.insertCities(result.data)
                             cities = initCitiesFlow()
                         }
                         _state.update { it.copy(isLoading = false, error = null) }

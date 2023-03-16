@@ -10,6 +10,7 @@ interface WeatherRepository {
     suspend fun getCityById(id: Int): City?
     suspend fun getCitiesCount(): Int
     suspend fun insertCity(city: City)
+    suspend fun insertCities(cities: List<City>)
     suspend fun deleteAllCities()
     suspend fun getWeatherData(): Resource<List<City>>
 }

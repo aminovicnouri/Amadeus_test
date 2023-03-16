@@ -40,6 +40,10 @@ class WeatherRepositoryImpl(
         dao.insertCity(city.toCityEntity())
     }
 
+    override suspend fun insertCities(cities: List<City>) {
+        dao.insertCities(cities = cities.map { it.toCityEntity() })
+    }
+
     override suspend fun deleteAllCities() {
         dao.deleteAllCities()
     }

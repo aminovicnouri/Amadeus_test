@@ -4,5 +4,6 @@
     <string name="back_button">back button</string>
     <string name="refresh_button">refresh button</string>
     <string name="network_error">Loading Error please verify your network and retry</string>
+    <string name="not_found">Not found</string>
 
 </resources>
